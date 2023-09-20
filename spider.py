@@ -1,6 +1,6 @@
 from urllib.request import urlopen
 from links import LinkFinder
-from main import *
+from general import *
 class spider:
     project_name = ''
     base_url = ''
@@ -50,6 +50,22 @@ class spider:
             print('Error : can not crawl page')
             return set()
         return finder.page_links()
+    
+    @staticmethod
+    def add_links_to_queue(links):
+        for url in links:
+            if url in spider.queue:
+                continue
+            if url in spider.crawled:
+                continue
+            if spider.domain_name not in url:
+                continue #preventing whole internet crawling :)
+            spider.queue.add(url)
+            
+    @staticmethod
+    def update_files():
+        set_convert_to_file(spider.queue, spider.queue_file)
+        set_convert_to_file(spider.crawled,spider.crawled_file)
             
         
     

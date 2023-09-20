@@ -36,7 +36,20 @@ class spider:
             spider.crawled.add(page_url)
             spider.update_files()
             
-    
+    @staticmethod
+    def gather_link(page_url):
+        html_string = ''
+        try:
+            response = urlopen(page_url)
+            if response.getheader('Content-Type') == 'text/html':
+                html_byte = response.read()
+                html_string = html_byte.decode("utf-8")
+            finder = LinkFinder(spider.base_url,page_url)
+            finder.feed(html_string)
+        except:
+            print('Error : can not crawl page')
+            return set()
+        return finder.page_links()
             
         
     

@@ -19,8 +19,8 @@ class LinkFinder(HTMLParser):
                     url = parse.urljoin(self.base_url,value)
                     self.links.add(url)
                     
-def page_links(self):
-    return self.links
+    def page_links(self):
+        return self.links
         
 finder = LinkFinder()
 finder.feed('<meta name="twitter:title" content="فروشگاه اینترنتی دیجی‌کالا">')

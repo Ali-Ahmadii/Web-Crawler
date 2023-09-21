@@ -52,9 +52,6 @@ class Spideee:
             if response.getheader('Content-Type') == 'text/html; charset=utf-8':
                 html_byte = response.read()
                 html_string = html_byte.decode('utf-8')
-                print(html_string)
-                print(Spideee.base_url)
-                print(page_url)
             ffff = LinkFinder(Spideee.base_url,page_url)
             ffff.feed(html_string)
         except Exception as e:

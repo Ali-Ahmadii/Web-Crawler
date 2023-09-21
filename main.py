@@ -4,12 +4,12 @@ from spider import Spideee
 from domain import *
 from general import *
 
-PROJECT_NAME = 'github'
-HOMEPAGE = 'https://github.com/'
+PROJECT_NAME = 'mygithub'
+HOMEPAGE = 'https://github.com/Ali-Ahmadii'
 DOMAIN_NAME = get_domain_name(HOMEPAGE)
 QUEUE_FILE = PROJECT_NAME + '\queue.txt'
 CRAWLED_FILE = PROJECT_NAME + '\cc.txt'
-NUMBER_OF_THREADS = 10
+NUMBER_OF_THREADS = 100
 queue = Queue()
 Spideee(PROJECT_NAME,HOMEPAGE,DOMAIN_NAME)
 

@@ -1,7 +1,9 @@
 from urllib.request import urlopen
 from links import LinkFinder
+from domain import *
 from general import *
-class spider:
+
+class Spideee:
     project_name = ''
     base_url = ''
     domain_name = ''
@@ -11,61 +13,71 @@ class spider:
     crawled = set()
     
     def __init__(self, project_name,base_url,domain_name):
-        spider.project_name = project_name
-        spider.base_url = base_url
-        spider.domain_name = domain_name
-        spider.queue_file = spider.project_name + '/queue.txt'
-        spider.crawled_file = spider.project_name + '/crawled'
+        Spideee.project_name = project_name
+        Spideee.base_url = base_url
+        Spideee.domain_name = domain_name
+        Spideee.queue_file = Spideee.project_name + '/queue.txt'
+        Spideee.crawled_file = Spideee.project_name + '/cc.txt'
         self.boot()
-        self.crawl_page('Spider Man',spider.base_url)
+        self.crawl_page('Spideee Man',Spideee.base_url)
         
     @staticmethod
-    def boot(self):
-        Create_ProjectDirectory(spider.project_name)
-        Create_DataFiles(spider.project_name,spider.base_url)
-        spider.queue = file_to_set(spider.queue_file)
-        spider.crawled = file_to_set(spider.crawled_file)
+    def boot():
+        Create_ProjectDirectory(Spideee.project_name)
+        Create_DataFiles(Spideee.project_name,Spideee.base_url)
+        Spideee.queue = file_to_set(Spideee.queue_file)
+        Spideee.crawled = file_to_set(Spideee.crawled_file)
     
     @staticmethod
     def crawl_page(thread_id,page_url):
-        if page_url not in spider.crawled:
+        if page_url not in Spideee.crawled:
             print(thread_id, 'crawling ' +page_url)
-            print('Queue ' +str(len(spider.queue)) + ' | crawled')
-            spider.add_links_to_queue(spider.gather_link(page_url))
-            spider.queue.remove(page_url)
-            spider.crawled.add(page_url)
-            spider.update_files()
+            print('Queue ' +str(len(Spideee.queue)) + ' | crawled')
+            print('here in crawl_page')
+            Spideee.add_links_to_queue(Spideee.gather_link(page_url))
+            print('here after crawl_page link gathering dunction calling')
+            Spideee.queue.remove(page_url)
+            Spideee.crawled.add(page_url)
+            Spideee.update_files()
             
     @staticmethod
     def gather_link(page_url):
+        print('worked')
+        print(page_url)
         html_string = ''
         try:
             response = urlopen(page_url)
-            if response.getheader('Content-Type') == 'text/html':
+            print(response)
+            print(response.getheader('Content-Type'))
+            if response.getheader('Content-Type') == 'text/html; charset=utf-8':
                 html_byte = response.read()
-                html_string = html_byte.decode("utf-8")
-            finder = LinkFinder(spider.base_url,page_url)
-            finder.feed(html_string)
-        except:
-            print('Error : can not crawl page')
+                html_string = html_byte.decode('utf-8')
+                print(html_string)
+                print(Spideee.base_url)
+                print(page_url)
+            ffff = LinkFinder(Spideee.base_url,page_url)
+            ffff.feed(html_string)
+        except Exception as e:
+            print('Error:', e)
             return set()
-        return finder.page_links()
+        print(ffff.page_links())
+        return ffff.page_links()
     
     @staticmethod
     def add_links_to_queue(links):
         for url in links:
-            if url in spider.queue:
+            if url in Spideee.queue:
                 continue
-            if url in spider.crawled:
+            if url in Spideee.crawled:
                 continue
-            if spider.domain_name not in url:
+            if Spideee.domain_name not in url:
                 continue #preventing whole internet crawling :)
-            spider.queue.add(url)
+            Spideee.queue.add(url)
             
     @staticmethod
     def update_files():
-        set_convert_to_file(spider.queue, spider.queue_file)
-        set_convert_to_file(spider.crawled,spider.crawled_file)
+        set_to_file(Spideee.queue, Spideee.queue_file)
+        set_to_file(Spideee.crawled,Spideee.crawled_file)
             
         
     

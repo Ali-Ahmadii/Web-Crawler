@@ -15,4 +15,4 @@ def get_sub_domain_name(url):
     except:
         return ''
     
-print(get_domain_name('https://www.digikala.com/landing/behtarin-vaghte-kharid/?'))
+
